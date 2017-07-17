@@ -1,3 +1,5 @@
+import Vector from 'vector.js'; 
+import Point2D from 'Point2D.js';  
 function Point3D(x, y, z){
     this.x = x; 
     this.y = y; 

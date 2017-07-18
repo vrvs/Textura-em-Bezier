@@ -100,4 +100,6 @@ function initGrid(){
 		x -= vLeft[0]*35;
 		y += -vLeft[1]*35;
 	}
-};
+	
+	ctx.lineWidth = 1.0;
+}

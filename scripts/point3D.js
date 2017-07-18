@@ -14,5 +14,5 @@ function Point3D(x, y, z){
         p.y = (1-p.y)*(camera.height/2); 
         p.normal = point3D.normal; 
         return p; 
-    }
+    };
 }

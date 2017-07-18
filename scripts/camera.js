@@ -20,7 +20,7 @@ function Camera (cam_p, n, v, hx, hy, d, width, height){
         this.n = this.n.normalization();
         //faz a projecao de v em n para obter uma diretiz de v ortogonal a n
         this.v = this.v.gram_schmidt(this.n);
-        this.n = v.normalization();
+        this.v = v.normalization();
         var u = this.n.vector_product(this.v);
         this.ssc.push([u.x, u.y, u.z]);
         this.ssc.push([this.v.x, this.v.y, this.v.z]); 

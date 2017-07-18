@@ -18,7 +18,7 @@ function Triangle(a, b, c){
     };
     
     //Metodo que retorna as cordenadas baricentricas dos pontos do triangulo com relação a um ponto
-    this.BarCoord = function(p){
+    this.barCoord = function(p){
         var dX = this.a.x - this.c.x;
         var dY = this.a.y - this.c.y;
         

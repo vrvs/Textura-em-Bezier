@@ -29,5 +29,6 @@ function Camera (cam_p, n, v, hx, hy, d, width, height){
     this.getProjection = function(point3D){
         return point3D.getViewPoint(this); 
     };
+    
+    
 }
-

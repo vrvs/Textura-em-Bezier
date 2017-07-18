@@ -14,5 +14,15 @@ function Point3D(x, y, z){
         p.y = (1-p.y)*(camera.height/2); 
         p.normal = point3D.normal; 
         return p; 
-    }
+    };
+    
+    this.scalarMult = function(a){
+        return new Point3D(this.x*a, this.y*a, this.z*a); 
+    };
+    
+    this.add = function(a){
+        return new Point3D(this.x + a.x, this.y + a.y, this.z + a.z); 
+    };
+    
+    
 }

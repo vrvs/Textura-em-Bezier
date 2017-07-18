@@ -21,8 +21,12 @@ function draw(){
 initCanvas();
 initGrid();
 
-var v = new Vector( 1, 2, 3);
-var w = new Vector( 3, 2, 1);
+var a = [[3,2,1], [1,2,3]]; 
+var surf = new Surface(a, 1);
+var pascal = surf.pascal(3);
+var ber = surf.bernstein(3, 0.5); 
 
-var vec = v.vectorProduct(w);
-console.log("result = " + vec.x + " " + vec.y + " " + vec.z);
+for(var i = 0; i<=3; i++){
+	console.log(pascal[i] + "");
+	console.log(ber[i] + " ");
+}

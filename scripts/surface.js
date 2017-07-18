@@ -39,8 +39,8 @@ function Surface (controlPoint, index){
     };
     
     this.tensor = function(){
-        var n = controlPoints.length();
-        var m  = controlPoints[0].length();
+        var n = this.controlPoints.length;
+        var m  = this.controlPoints[0].length;
         for (var i=0; i<n; i++){
             this.mesh[i] = []; 
         }
@@ -64,8 +64,8 @@ function Surface (controlPoint, index){
     };
     
     this.triangularize = function(){
-        var n = controlPoints.length();
-        var m  = controlPoints[0].length();
+        var n = controlPoints.length;
+        var m  = controlPoints[0].length;
         var aux = [];
 
         for (var i=0; i<2; i++){
@@ -80,14 +80,29 @@ function Surface (controlPoint, index){
                 //aux[i+1][j+1] = this.mesh[i+1][j+1]; 
                 var t1 = new Triangle(this.mesh[i][j], this.mesh[i+1][j], this.mesh[i][j+1]);
                 var t2 = new Triangle(this.mesh[i+1][j+1], this.mesh[i+1][j], this.mesh[i][j+1]);
-                this.meshTri.push(t1);
-                this.meshTri.push(t2); 
+                this.meshTri.push(t1.sort());
+                this.meshTri.push(t2.sort()); 
             }
         }
     };
-    
-    this.scarline = function(){
-        
-    }
-    
+    this.scanline = function(){
+        for(var i = 0; i<this.meshTri.length; i++){
+            var p1 = this.meshTri[i].a; 
+            var p2 = this.meshTri[i].b;
+            var p3 = this.meshTri[i].c; 
+            var coemin = (p1.y - p2.y)/(p1.x - p2.x);
+            var coemax = (-(p3.y - p2.y))/(-p3.x + p2.x); 
+            var xmin, xmax; 
+            xmin = xmax = p2.x; 
+            for (var k = p1.y; k<p3.y; k++){
+                for(var j = xmin; j<Math.max(xmin, xmax); j++){
+                    //fazer a consulta ao zbuffer 
+                    //pintar o pixel do triangulo 
+                }
+                xmin = xmin + (1/coemin);
+                xmax = xmax + (1/coemax); 
+            }
+        }
+    };
 }
+    

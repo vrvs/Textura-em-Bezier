@@ -1,44 +1,84 @@
-
-function Triangle (a, b, c){
-    this.a = a;
-    this.b = b;
-    this.c = c; 
-    this.normal = new Vector(0,0,0);
-    //vcetor normal do triangulo 
-    this.getNormal = function(){
-        var normal; 
-        var vec1; 
-        var vec2; 
-        
-        vec1 = new Vector (this.b.x - this.a.x, this.b.y - this.a.y, this.b.z - this.a.z); 
-        vec2 = new Vector (this.c.x - this.a.x, this.c.y - this.a.y, this.c.z - this.a.z); 
-        normal = vec1.vector_product(vec2);
-        this.normal = normal.normalization(); 
-    }
+function Triangle(a, b, c){
     
-    this.getCord_bar = function(p){
-        var alfa = 0; 
-        var gama = 0; 
-        var beta = 0; 
-        var dem = 0; 
-        var result = [];
-        
-        dem = ((this.b.y - this.c.y)*(this.a.x - this.c.x)) - ((this.b.x - this.c.x)*(this.a.y - this.c.y));
-        beta = ((p.y*(this.a.x - this.c.x)) - (p.x*(this.a.y - this.c.y)))/dem; 
-        alfa = (p.x - beta*(this.b.x - this.c.x))/(this.a.x - this.c.x); 
-        gama = 1 - (beta + alfa);
-        result.push(alfa);
-        result.push(beta);
-        result.push(gama);
-        
-        return result; 
-    }
+    //Construtor da classe triangulo
+    this.a = a;                         //Ponto A do triangulo
+    this.b = b;                         //Ponto B do triangulo
+    this.c = c;                         //Ponto C do triangulo
+    this.normal = this.calcNormal();    //Vetor normal do triangulo
     
-    this.getArea = function(){
-        var vec1 = new Vector (this.b.x-this.a.x, this.b.y-this.a.y, this.b.z-this.a.z);
-        var vec2 = new Vector (this.b.x-this.c.x, this.b.y-this.c.y, this.b.z-this.c.z);
-        var normal = vec1.vector_product(vec2); 
-        var area = Math.abs(normal.norma())/2; 
-    }
+    //Metodo que calcula o vetor normal do triangulo normalizado
+    this.calcNormal = function(){
+        var v = new Vector(this.b.x - this.a.x, this.b.y - this.a.y, this.b.z - this.a.z); 
+        var u = new Vector(this.c.x - this.a.x, this.c.y - this.a.y, this.c.z - this.a.z); 
+        var w = v.vectorProduct(u);
+        this.normal = w;
+        if(this.isTriangle()){
+            this.normal = w.normalize();
+        }
+    };
     
+    //Metodo que retorna as cordenadas baricentricas dos pontos do triangulo com relação a um ponto
+    this.BarCoord = function(p){
+        var dX = this.a.x - this.c.x;
+        var dY = this.a.y - this.c.y;
+        
+        var beta = ((p.y - this.c.y)*dX - (p.x - this.c.x)*dY)/((this.b.y - this.c.y)*dX - (this.b.x - this.c.x)*dY);
+        var alfa = ((p.x - this.c.x) - (this.b.x - this.c.x)*beta)/dX;
+        var gama = 1 - beta - alfa;
+        
+        return [alfa, beta, gama]; 
+    };
+    
+    //Metodo que retorna a area de triangulo
+    this.area = function(){
+        var v = new Vector(this.b.x-this.a.x, this.b.y-this.a.y, this.b.z-this.a.z);
+        var u = new Vector(this.b.x-this.c.x, this.b.y-this.c.y, this.b.z-this.c.z);
+        var w = v.vectorProduct(u); 
+        return w.norma()/2;
+    };
+    
+    //Metodo que retorna um novo triangulo com pontos ordenados
+    this.sort = function(){
+        var t = this.clone();
+        var aux;
+        
+        if(t.a.y < t.b.y){
+            aux = t.a;
+            t.a = t.b;
+            t.b = aux;
+        } else if(t.a.y === t.b.y && t.a.x > t.b.x){
+            aux = t.a;
+            t.a = t.b;
+            t.b = aux;
+        }
+        if(t.a.y < t.c.y){
+            aux = t.a;
+            t.a = t.c;
+            t.c = aux;
+        } else if(t.a.y === t.c.y && t.a.x > t.c.x){
+            aux = t.a;
+            t.a = t.c;
+            t.c = aux;
+        }
+        if(t.b.y < t.c.y){
+            aux = t.b;
+            t.b = t.c;
+            t.c = aux;
+        } else if(t.b.y === t.c.y && t.b.x > t.c.x){
+            aux = t.b;
+            t.b = t.c;
+            t.c = aux;
+        }
+        return t;
+    };
+    
+    //Metodo que testa a valiade do triangulo
+    this.isTriangle = function(){
+        return (this.normal.x != 0 || this.normal.y != 0 || this.normal.z != 0);
+    };
+    
+    //Metodo que clona o tringulo corrente
+    this.clone = function(){
+        return (new Triangle(this.a, this.b, this.c));
+    };
 }

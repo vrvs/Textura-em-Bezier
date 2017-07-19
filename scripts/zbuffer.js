@@ -52,12 +52,35 @@ function scanline (yscan, xmin, xmax, triangle, index){
         if(x<0 || x>= width ){
             continue; 
         }
-        var p = new Point2D(x, yscan);     
-        bar = triangle.cord_bar(p); 
+
+        var p = new Point2D(x, yscan); 
+        bar = triangle.barCoord(p); 
+        var p3D = new Point3D(bar[0]*triangle.p1, bar[1]*triangle.p2, bar[2]*triangle.p3);
         
-        //verificar o zbuffer 
-        if(zbuffer[x])
+        if(zbuffer[p3D.x][p3D.y] > p3D.z){
+            zbuffer[p3D.x][p3D.y] = p3D.z; 
+            
+            var nx = triangle.a.normal.x*bar[0] + triangle.b.normal.x*bar[1] + triangle.c.normal.x*bar[2];
+            var ny = triangle.a.normal.y*bar[0] + triangle.b.normal.y*bar[1] + triangle.c.normal.y*bar[2];
+            var nz = triangle.a.normal.z*bar[0] + triangle.b.normal.z*bar[1] + triangle.c.normal.z*bar[2];
+            
+            var n = new vector(nx, ny, nz); 
+            p3D.normal = n; 
+            
+            var v = new Vector (-p3D.x, -p3D.y, -p3D.z); 
+            var l = new Vector (plVista.x - p3D.x, plVista.y - p3D.y, plVista.z - p3D.z); 
+            
+            n = n.normalize(); 
+            v = v.normalize();
+            l = l.normalize(); 
+       
+             if(v.scalarProduct(n) < 0){
+                var aux = n; 
+                n = new Vector (-n.x, -n.y, -n.z); 
+            }
+            color = ligthing.phong(n, v, l, p3D, x, yscan);  
+            paint(x, yscan, color); 
+        }
     }
     
-
 }

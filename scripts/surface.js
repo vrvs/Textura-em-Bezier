@@ -32,9 +32,9 @@ function Surface(controlPoints, evaluation){
     //Metodo que calcula o delta(1,0)
     this.deltaS = function(i,j) {
       var result = new Vector(0,0,0);
-      result.x = mash[i+1][j].x - m[i][j].x;
-      result.y = mash[i+1][j].y - m[i][j].y;
-      result.z = mash[i+1][j].z - m[i][j].z;
+      result.x = mash[i+1][j].x - mash[i][j].x;
+      result.y = mash[i+1][j].y - mash[i][j].y;
+      result.z = mash[i+1][j].z - mash[i][j].z;
       return result;
     };
     
@@ -63,9 +63,9 @@ function Surface(controlPoints, evaluation){
     //Metodo que calcula o delta(0,1)
     this.deltaT = function(i,j) {
       var result = new Vector(0,0,0);
-      result.x = mash[i][j+1].x - m[i][j].x;
-      result.y = mash[i][j+1].y - m[i][j].y;
-      result.z = mash[i][j+1].z - m[i][j].z;
+      result.x = mash[i][j+1].x - mash[i][j].x;
+      result.y = mash[i][j+1].y - mash[i][j].y;
+      result.z = mash[i][j+1].z - mash[i][j].z;
       return result;
     };
     

@@ -74,10 +74,6 @@ function Surface (controlPoint, index){
        
         for (var i = 0; i<n-1; i++){
             for(var j = 0; j<m-1; j++){
-                //aux[i][j] = this.mesh[i][j];
-                //aux[i+1][j] = this.mesh[i+1][j];
-                //aux[i][j+1] = this.mesh[i][j+1];
-                //aux[i+1][j+1] = this.mesh[i+1][j+1]; 
                 var t1 = new Triangle(this.mesh[i][j], this.mesh[i+1][j], this.mesh[i][j+1]);
                 var t2 = new Triangle(this.mesh[i+1][j+1], this.mesh[i+1][j], this.mesh[i][j+1]);
                 this.meshTri.push(t1.sort());

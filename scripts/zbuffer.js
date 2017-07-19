@@ -56,6 +56,7 @@ function scanline (yscan, xmin, xmax, triangle, index){
         bar = triangle.cord_bar(p); 
         
         //verificar o zbuffer 
+        if(zbuffer[x])
     }
     
 

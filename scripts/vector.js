@@ -81,4 +81,17 @@ function Vector(x, y, z){
 		var norma = Math.sqrt(sProd);
 		return norma; 
 	};
+	
+	//Metodo retorna o vetor corrente com as coordenadas truncadas
+	this.truncate = function(){
+		var rX = Math.floor(this.x);
+		var rY = Math.floor(this.y);
+		var rZ = Math.floor(this.z);
+		return (new Vector(rX, rY, rZ));
+	};
+	
+	//Metodo que clona o vetor corrente e retorna um novo
+	this.clone = function(){
+		return (new Vector(this.x, this.y, this.z));
+	};
 }

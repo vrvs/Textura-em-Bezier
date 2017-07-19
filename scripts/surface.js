@@ -39,8 +39,8 @@ function Surface (controlPoint, index){
     };
     
     this.tensor = function(){
-        var n = this.controlPoints.length;
-        var m  = this.controlPoints[0].length;
+        var n = this.controlPoints.length();
+        var m  = this.controlPoints[0].length();
         for (var i=0; i<n; i++){
             this.mesh[i] = []; 
         }
@@ -90,19 +90,10 @@ function Surface (controlPoint, index){
             var p1 = this.meshTri[i].a; 
             var p2 = this.meshTri[i].b;
             var p3 = this.meshTri[i].c; 
-            var coemin = (p1.y - p2.y)/(p1.x - p2.x);
-            var coemax = (-(p3.y - p2.y))/(-p3.x + p2.x); 
-            var xmin, xmax; 
-            xmin = xmax = p2.x; 
-            for (var k = p1.y; k<p3.y; k++){
-                for(var j = xmin; j<Math.max(xmin, xmax); j++){
-                    //fazer a consulta ao zbuffer 
-                    //pintar o pixel do triangulo 
-                }
-                xmin = xmin + (1/coemin);
-                xmax = xmax + (1/coemax); 
-            }
+            var triangle = new Triangle(p1, p2, p3); 
+            
         }
+        
     };
 }
     

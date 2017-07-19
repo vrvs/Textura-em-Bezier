@@ -1,10 +1,15 @@
 function Triangle(a, b, c){
     
     //Construtor da classe triangulo
-    this.a = a;                         //Ponto A do triangulo
-    this.b = b;                         //Ponto B do triangulo
-    this.c = c;                         //Ponto C do triangulo
-    this.normal = this.calcNormal();    //Vetor normal do triangulo
+    this.a = a;     //Ponto A do triangulo
+    this.b = b;     //Ponto B do triangulo
+    this.c = c;     //Ponto C do triangulo
+    this.normal;    //Vetor normal do triangulo
+    
+    //Metodo que testa a valiade do triangulo
+    this.isTriangle = function(){
+        return (this.normal.x != 0 || this.normal.y != 0 || this.normal.z != 0);
+    };
     
     //Metodo que calcula o vetor normal do triangulo normalizado
     this.calcNormal = function(){
@@ -16,6 +21,7 @@ function Triangle(a, b, c){
             this.normal = w.normalize();
         }
     };
+    this.calcNormal();
     
     //Metodo que retorna as cordenadas baricentricas dos pontos do triangulo com relação a um ponto
     this.barCoord = function(p){
@@ -70,11 +76,6 @@ function Triangle(a, b, c){
             t.c = aux;
         }
         return t;
-    };
-    
-    //Metodo que testa a valiade do triangulo
-    this.isTriangle = function(){
-        return (this.normal.x != 0 || this.normal.y != 0 || this.normal.z != 0);
     };
     
     //Metodo que clona o tringulo corrente

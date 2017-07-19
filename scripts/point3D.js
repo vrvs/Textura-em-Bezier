@@ -1,10 +1,10 @@
-import Vector from 'vector.js'; 
-import Point2D from 'Point2D.js';  
-function Point3D(x, y, z){
-    this.x = x; 
-    this.y = y; 
-    this.z = z; 
-    this.normal = new Vector(0,0,0);
+ function Point3D(x, y, z){
+    
+    //Construtor da classe de Pontos 3D
+    this.x = x;     //valor de X do ponto corrente
+    this.y = y;     //valor de Y do ponto corrente
+    this.z = z;     //valor de Z do ponto corrente
+    this.normal;    //vetor normal ao ponto
     
     this.getViewPoint = function(camera){
         var xp = (point3D.x*camera.d)/(point3D.z*camera.hx); 
@@ -16,12 +16,12 @@ function Point3D(x, y, z){
         return p; 
     };
     
-    this.scalarMult = function(a){
-        return new Point3D(this.x*a, this.y*a, this.z*a); 
+    this.scalarMulti = function(k){
+        return (new Point3D(this.x*k, this.y*k, this.z*k)); 
     };
     
     this.add = function(a){
-        return new Point3D(this.x + a.x, this.y + a.y, this.z + a.z); 
+        return (new Point3D(this.x + a.x, this.y + a.y, this.z + a.z)); 
     };
     
     

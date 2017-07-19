@@ -1,7 +1,7 @@
-import Vector from 'Vector.js'; 
-
 function Point2D (x,y) {
-    this.x = x; 
-    this.y = y; 
-    this.normal = new Vector (0,0,0);
+    
+    //Construtor da classe Point2D
+    this.x = x;     //Coordenada x do ponto
+    this.y = y;     //Coordenada y do ponto
+    this.normal;    //Vetor normal do ponto no 
 }

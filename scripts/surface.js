@@ -29,68 +29,6 @@ function Surface(controlPoints, evaluation){
        return result;
     };
     
-    //Metodo que calcula o delta(1,0)
-    this.deltaS = function(i,j) {
-      var result = new Vector(0,0,0);
-      result.x = controlPoints[i+1][j].x - controlPoints[i][j].x;
-      result.y = controlPoints[i+1][j].y - controlPoints[i][j].y;
-      result.z = controlPoints[i+1][j].z - controlPoints[i][j].z;
-      return result;
-    };
-    
-    //Metodo que calcula a derivada da superficie em relação a s
-    this.partialDerivativeS = function(s,t) {
-        var result = new Vector(0,0,0);
-        var bernsteinS, bernsteinT,delta;
-        var n = controlPoints.length()-1;
-        var m = controlPoints[0].length()-1;
-        for(var i=0; i<=n-1; i++) {
-            bernsteinS = this.bernstein(n-1,i,s);
-            for(var j=0; j<=m; j++) {
-                bernsteinT = this.bernstein(m,j,t);
-                delta = this.deltaS(i,j);
-                result.x += bernsteinS*bernsteinT*delta.x;
-                result.y += bernsteinS*bernsteinT*delta.y;
-                result.z += bernsteinS*bernsteinT*delta.z;
-            }
-        }
-        result.x *= n;
-        result.y *= n;
-        result.z *= n;
-        return result;
-    };
-    
-    //Metodo que calcula o delta(0,1)
-    this.deltaT = function(i,j) {
-      var result = new Vector(0,0,0);
-      result.x = controlPoints[i][j+1].x - controlPoints[i][j].x;
-      result.y = controlPoints[i][j+1].y - controlPoints[i][j].y;
-      result.z = controlPoints[i][j+1].z - controlPoints[i][j].z;
-      return result;
-    };
-    
-    //Metodo que calcula a derivada da superficie em relação a t
-    this.partialDerivativeT = function(s,t) {
-        var result = new Vector(0,0,0);
-        var bernsteinS, bernsteinT,delta;
-        var n = controlPoints.length()-1;
-        var m = controlPoints[0].length()-1;
-        for(var i=0; i<=n; i++) {
-            bernsteinS = this.bernstein(n,i,s);
-            for(var j=0; j<=m-1; j++) {
-                bernsteinT = this.bernstein(m-1,j,t);
-                delta = this.deltaT(i,j);
-                result.x += bernsteinS*bernsteinT*delta.x;
-                result.y += bernsteinS*bernsteinT*delta.y;
-                result.z += bernsteinS*bernsteinT*delta.z;
-            }
-        }
-        result.x *= m;
-        result.y *= m;
-        result.z *= m;
-        return result;
-    };
-    
     //Metodo que calcula os pontos de malha da superficie
     this.calcMesh = function(){
         var n = controlPoints.length-1;

@@ -28,11 +28,15 @@ function Camera (cam_p, n, v, hx, hy, d, width, height){
     }
     this.getChangeCord = function(p){
         var cam_cord = p.sub(p, this.cam_p); 
-        //multiplicar pela matriz de mudanca de base
-        
+        var returnPoint = [];
+        returnPoint.push(this.d[0][0]*p[0]+d[0][1]*p[1]+d[0][2]*p[2]);
+        returnPoint.push(this.d[1][0]*p[0]+d[1][1]*p[1]+d[1][2]*p[2]);
+        returnPoint.push(this.d[2][0]*p[0]+d[2][1]*p[1]+d[2][2]*p[2]);
+        return returnPoint;
     }
     
     this.getProjection = function(point3D){
         return point3D.getViewPoint(this); 
     }
+    
 }

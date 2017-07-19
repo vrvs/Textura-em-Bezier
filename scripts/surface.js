@@ -32,9 +32,9 @@ function Surface(controlPoints, evaluation){
     //Metodo que calcula o delta(1,0)
     this.deltaS = function(i,j) {
       var result = new Vector(0,0,0);
-      result.x = mash[i+1][j].x - mash[i][j].x;
-      result.y = mash[i+1][j].y - mash[i][j].y;
-      result.z = mash[i+1][j].z - mash[i][j].z;
+      result.x = controlPoints[i+1][j].x - controlPoints[i][j].x;
+      result.y = controlPoints[i+1][j].y - controlPoints[i][j].y;
+      result.z = controlPoints[i+1][j].z - controlPoints[i][j].z;
       return result;
     };
     
@@ -42,8 +42,8 @@ function Surface(controlPoints, evaluation){
     this.partialDerivativeS = function(s,t) {
         var result = new Vector(0,0,0);
         var bernsteinS, bernsteinT,delta;
-        var n = mesh.length()-1;
-        var m = mesh[0].length()-1;
+        var n = controlPoints.length()-1;
+        var m = controlPoints[0].length()-1;
         for(var i=0; i<=n-1; i++) {
             bernsteinS = this.bernstein(n-1,i,s);
             for(var j=0; j<=m; j++) {
@@ -63,9 +63,9 @@ function Surface(controlPoints, evaluation){
     //Metodo que calcula o delta(0,1)
     this.deltaT = function(i,j) {
       var result = new Vector(0,0,0);
-      result.x = mash[i][j+1].x - mash[i][j].x;
-      result.y = mash[i][j+1].y - mash[i][j].y;
-      result.z = mash[i][j+1].z - mash[i][j].z;
+      result.x = controlPoints[i][j+1].x - controlPoints[i][j].x;
+      result.y = controlPoints[i][j+1].y - controlPoints[i][j].y;
+      result.z = controlPoints[i][j+1].z - controlPoints[i][j].z;
       return result;
     };
     
@@ -73,8 +73,8 @@ function Surface(controlPoints, evaluation){
     this.partialDerivativeT = function(s,t) {
         var result = new Vector(0,0,0);
         var bernsteinS, bernsteinT,delta;
-        var n = mesh.length()-1;
-        var m = mesh[0].length()-1;
+        var n = controlPoints.length()-1;
+        var m = controlPoints[0].length()-1;
         for(var i=0; i<=n; i++) {
             bernsteinS = this.bernstein(n,i,s);
             for(var j=0; j<=m-1; j++) {

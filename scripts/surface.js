@@ -40,9 +40,10 @@ function Surface(controlPoints, evaluation){
             for(var t=0 ; t<=1 ; t+=step){
                 var point = new Point3D(0, 0, 0);
                 for (var i=0; i<=n; i++){
+                    var bernS = this.bernstein(n, i, s);
                     for (var j=0; j<=m; j++){
-                        var bern = this.bernstein(n, i, s) * this.bernstein(m, j, t);
-                        point = point.add(controlPoints[i][j].scalarMulti(bern));
+                        var bernT = this.bernstein(m, j, t);
+                        point = point.add(controlPoints[i][j].scalarMulti(bernS * bernT));
                     }
                 }
                 this.mesh[this.mesh.length-1].push(point);
@@ -58,6 +59,8 @@ function Surface(controlPoints, evaluation){
 
         for (var i=0 ; i<maxS ; i++){
             for(var j=0 ; j<maxT ; j++){
+                
+                
                 var t1 = new Triangle(this.mesh[i][j], this.mesh[i+1][j], this.mesh[i][j+1]);
                 var t2 = new Triangle(this.mesh[i+1][j+1], this.mesh[i+1][j], this.mesh[i][j+1]);
                 if(t1.isTriangle()){
@@ -87,7 +90,7 @@ function loadSurface(event){
             for(var i=0 ; i<data.length ; i++){
                 var values  = data[i].split(' ');
                 for(var j=0 ; j<values.length ; j++){
-                    input.push(parseInt(values[j]));
+                    input.push(parseFloat(values[j]));
                 }
             }
             

@@ -1,3 +1,5 @@
+var points = [];
+
 function Surface(controlPoints, evaluation){
     
     //Contrutor da superficie de bezier
@@ -38,11 +40,16 @@ function Surface(controlPoints, evaluation){
         for(var s=0 ; s<=1 ; s+=step){
             this.mesh.push([]);
             for(var t=0 ; t<=1 ; t+=step){
-                var point = new Point3D(0, 0, 0);
+                var point = new Point3D(0, 0, 0, s, t);
                 for (var i=0; i<=n; i++){
+                    var bernS = this.bernstein(n, i, s);
                     for (var j=0; j<=m; j++){
-                        var bern = this.bernstein(n, i, s) * this.bernstein(m, j, t);
-                        point = point.add(controlPoints[i][j].scalarMulti(bern));
+                        var bernT = this.bernstein(m, j, t);
+                        var a = controlPoints[i][j].scalarMulti(bernS * bernT); 
+                        point.x += a.x; 
+                        point.y += controlPoints[i][j].scalarMulti(bernS * bernT).y;
+                        point.z += controlPoints[i][j].scalarMulti(bernS * bernT).z; 
+                        //point = point.add(controlPoints[i][j].scalarMulti(bernS * bernT));
                     }
                 }
                 this.mesh[this.mesh.length-1].push(point);
@@ -103,7 +110,7 @@ function loadSurface(event){
             for(var i=0 ; i<data.length ; i++){
                 var values  = data[i].split(' ');
                 for(var j=0 ; j<values.length ; j++){
-                    input.push(parseInt(values[j]));
+                    input.push(parseFloat(values[j]));
                 }
             }
             

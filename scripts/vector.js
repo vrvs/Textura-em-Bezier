@@ -69,29 +69,10 @@ function Vector(x, y, z){
 		return result; 
 	};
 	
-	//Metodo que calcula o produto Kroneck de vetores
-	this.kroneckProduct = function(b){
-		var result = new Vector(this.x*b.x, this.y*b.y, this.z*b.z); 
-		return result; 
-	};
-	
 	//Metodo que retira a norma de um vetor
 	this.norma = function(){
 		var sProd = this.scalarProduct(this);
 		var norma = Math.sqrt(sProd);
 		return norma; 
-	};
-	
-	//Metodo retorna o vetor corrente com as coordenadas truncadas
-	this.truncate = function(){
-		var rX = Math.floor(this.x);
-		var rY = Math.floor(this.y);
-		var rZ = Math.floor(this.z);
-		return (new Vector(rX, rY, rZ));
-	};
-	
-	//Metodo que clona o vetor corrente e retorna um novo
-	this.clone = function(){
-		return (new Vector(this.x, this.y, this.z));
 	};
 }

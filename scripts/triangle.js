@@ -1,10 +1,10 @@
 function Triangle(a, b, c){
     
     //Construtor da classe triangulo
-    this.a = a;     //Ponto A do triangulo
-    this.b = b;     //Ponto B do triangulo
-    this.c = c;     //Ponto C do triangulo
-    this.normal;    //Vetor normal do triangulo
+    this.a = a;                         //Ponto A do triangulo
+    this.b = b;                         //Ponto B do triangulo
+    this.c = c;                         //Ponto C do triangulo
+    this.normal;                        //Vetor normal do triangulo
     
     //Metodo que testa a valiade do triangulo
     this.isTriangle = function(){
@@ -82,4 +82,5 @@ function Triangle(a, b, c){
     this.clone = function(){
         return (new Triangle(this.a, this.b, this.c));
     };
+    
 }

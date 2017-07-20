@@ -42,23 +42,26 @@ function draw(){
 			}
 		}	
 	} else {
-		if(camera != null && surface != null && lighting != null){
+		if(camera != null && surface != null && texture != null){
 			var points = surface.mesh;
 			var pl = camera.changeCoord(lighting.pl);
 			
 			for(var i=0 ; i<points.length ; i++){
 				for(var j=0 ; j<points[0].length ; j++){
 					var p = points[i][j];
+					
+					var color = texture.getRGB(p.s, p.t);
 					p = camera.changeCoord(p);
 					
-					var v = camera.cam_p.sub(p);
-					var l = pl.sub(p);
+					//var v = camera.cam_p.sub(p);
+					//var l = pl.sub(p);
 					
-					var color = lighting.phong(p.normal, v, l);
+					//var color = lighting.phong(p.normal, v, l);
 					
 					p = camera.projectize(p);
 					
-					ctx.fillStyle = "rgb(" + color.x + ", " + color.y + ", " + color.y + ")";
+					console.log("rgb(" + color.x + ", " + color.y + ", " + color.z + ")");
+					ctx.fillStyle = "rgb(" + color.x + ", " + color.y + ", " + color.z + ")";
 					ctx.fillRect(p.x, p.y, 1, 1);
 				}
 			}

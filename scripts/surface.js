@@ -38,7 +38,7 @@ function Surface(controlPoints, evaluation){
         for(var s=0 ; s<=1 ; s+=step){
             this.mesh.push([]);
             for(var t=0 ; t<=1 ; t+=step){
-                var point = new Point3D(0, 0, 0, s, t);
+                var point = new Point3D(0, 0, 0);
                 for (var i=0; i<=n; i++){
                     var bernS = this.bernstein(n, i, s);
                     for (var j=0; j<=m; j++){
@@ -46,6 +46,8 @@ function Surface(controlPoints, evaluation){
                         point = point.add(controlPoints[i][j].scalarMulti(bernS * bernT));
                     }
                 }
+                point.s = s;
+                point.t = t;
                 this.mesh[this.mesh.length-1].push(point);
             }
         }

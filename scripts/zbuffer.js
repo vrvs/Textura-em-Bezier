@@ -15,63 +15,69 @@ function processTriangle (triangle){
     var p2 = triangle.b; 
     var p3 = triangle.c; 
     
-    var ymax = p1.y; 
-    var ymin = Math.min(p2.y, p3.y); 
-    var xmin = p1.x; 
-    var xmax = p1.x;
-    var ang12, ang23, ang31;  
+    var xmin = 0;
+    var xmax = 0;
+    var ymin = 0;
+    var ymax = 0;
+    var a12 = 0;
+    var a13 = 0;
+    var a23 = 0;
+    var aXmax = 0;
+    var aXmin = 0;
+    
+    xmin = Math.min(p2.x, p3.x);
+    xmax = p3.x;
+    
+    ymin = Math.min(p2.y, p3.y);
+    ymax = p1.y;
     
     if(p2.x != p1.x){
-        ang12 = (p2.y - p1.y)/(p2.x - p1.x);
+        a12 = (p1.y - p2.y)/(p1.x - p2.x);
     }else {
-        ang12 = 0; 
+        a12 = 0; 
     }if (p3.x != p2.x){
-        ang23 = (p3.y - p2.y)/(p3.x - p2.x);
+        a23 = (p2.y - p3.y)/(p2.x - p3.x);
     }else {
-        ang23 = 0; 
+        a23 = 0; 
     }if(p3.x != p1.x){
-        ang31 = (p3.y - p1.y)/(p3.x - p1.x);
+        a13 = (p1.y - p3.y)/(p1.x - p3.x);
     }else {
-        ang31 = 0; 
+        a13 = 0; 
     }
-    var alt = true; 
+    
     if((p3.y - p2.y) == 0){
-        xmin = Math.min(p3.x, p2.x);
-        xmax = Math.max(p3.x, p2.x); 
-        ang23 = ang12; 
-        alt = false; 
-    }else if ((p1.y - p3.y) == 0){
-        xmin = Math.min(p1.x, p3.x);
-        xmax = Math.max(p1.x, p3.x);
-        ang31 = ang23; 
-        alt = false;
+        aXmin = a12;
+        aXmax = a13;
+    }else{
+        aXmin = a23;
+        aXmax = a13;
     }
     
     
     for (var yscan = ymin; yscan < ymax; yscan++){
+        
+        if(yscan == p2.y) aXmin = a12;
+        //if(yscan == p3.y) aXmax = a12;
+        
         if(yscan >= height || yscan < 0){
             continue; 
         }
         
         scanline(yscan, Math.floor(xmin), Math.floor(xmax), triangle);
-        if (alt && (yscan == p2.y || yscan == p3.y)){
-            if(yscan-p2.y){
-                ang21 = ang23;
+        /*if ( (yscan == p2.y || yscan == p3.y)){
+            if((yscan-p2.y)==0){
+                a12 = a23;
             }else{
-                ang31 = ang23; 
-            }
-            alt = false; 
-        }
-        if(ang12 != 0){
-            xmin += 1/ang12; 
-        }
-        if(ang31 != 0){
-            xmax += 1/ang31;  
-        }
+                a13 = a23; 
+            } 
+        }*/
+        if(aXmin != 0) xmin += 1/aXmin;
+        if(aXmax != 0) xmax += 1/aXmax;
     }
     
 }
 var count=0; 
+
 
 //ajeitar a classe triangulo para retornar as coordenadas baricentricas, nao o ponto ja multiplicado. 
 function scanline (yscan, xmin, xmax, triangle){

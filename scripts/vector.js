@@ -69,12 +69,6 @@ function Vector(x, y, z){
 		return result; 
 	};
 	
-	//Metodo que calcula o produto Kroneck de vetores
-	this.kroneckProduct = function(b){
-		var result = new Vector(this.x*b.x, this.y*b.y, this.z*b.z); 
-		return result; 
-	};
-	
 	//Metodo que retira a norma de um vetor
 	this.norma = function(){
 		var sProd = this.scalarProduct(this);

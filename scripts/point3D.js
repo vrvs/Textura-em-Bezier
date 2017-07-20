@@ -12,11 +12,20 @@
         return (new Point3D(this.x*k, this.y*k, this.z*k,this.s, this.t));
     };
     
+    //Metodo que realiza a soma de dois pontos
     this.add = function(a){
         return (new Point3D(this.x + a.x, this.y + a.y, this.z + a.z, )); 
     };
     
+    //Metodo que translada um ponto com relação a outro
+    this.translate = function(a){
+        var p = new Point3D(this.x - a.x, this.y - a.y, this.z - a.z);
+        p.normal = this.normal;
+        return p; 
+    };
+    
+    //Metodo que retorna o vetor da diferença de dois pontos
     this.sub = function(a){
-        return (new Point3D(this.x - a.x, this.y - a.y, this.z - a.z, this.s - a.s, this.t - a.t)); 
+        return (new Vector(this.x - a.x, this.y - a.y, this.z - a.z)); 
     };
 }

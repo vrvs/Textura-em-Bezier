@@ -1,4 +1,15 @@
-function processTriangle (triangle, index){
+var zbuffer = [];
+
+function initZbuffer(){
+	for(var i = 0; i<width; i++){
+		zbuffer.push([]); 
+		for(var j = 0; j<height; j++){
+			zbuffer[zbuffer.length-1].push(+Infinity); 
+		}
+	}
+}
+
+function processTriangle (triangle){
     
     var p1 = triangle.a;
     var p2 = triangle.b; 
@@ -31,11 +42,11 @@ function processTriangle (triangle, index){
         maxX = Math.max(p1.x, p3.x);
     }
     
-    for (var yscan = ymin; yscan < ymax; yscan++){
-        if(yscan >= width || yscan < 0){
+    for (var yscan = minY; yscan < maxY; yscan++){
+        if(yscan >= height || yscan < 0){
             continue; 
         }
-        scanline(yscan, Math.floor(xmin), Math.floor(xmax), triangle, index);
+        scanline(yscan, Math.floor(minX), Math.floor(maxX), triangle);
         if(ang12 != 0){
             minX += 1/ang12; 
         }
@@ -45,30 +56,47 @@ function processTriangle (triangle, index){
     }
     
 }
+
 //ajeitar a classe triangulo para retornar as coordenadas baricentricas, nao o ponto ja multiplicado. 
-function scanline (yscan, xmin, xmax, triangle, index){
-    var bar = []; 
-    for (var x = xmin; x<xmax; x++){
+function scanline (yscan, xmin, xmax, triangle){
+    var bar; 
+    for (var x = xmin; x<=xmax; x++){
         if(x<0 || x>= width ){
             continue; 
         }
-
-        var p = new Point2D(x, yscan); 
-        bar = triangle.barCoord(p); 
-        var p3D = new Point3D(bar[0]*triangle.p1, bar[1]*triangle.p2, bar[2]*triangle.p3);
         
-        if(zbuffer[p3D.x][p3D.y] > p3D.z){
-            zbuffer[p3D.x][p3D.y] = p3D.z; 
+        var p = new Point2D(x, yscan, new Point3D(0,0,0)); 
+        bar = triangle.barCoord(p); 
+        //var p13D = triangle.a.treeD; 
+        //var p23D = triangle.b.treeD;
+        //var p33D = triangle.c.treeD; 
+        var p13D = triangle.a;
+        var p23D = triangle.b;
+        var p33D = triangle.c; 
+        
+        var px = p13D.x*bar[0] + p23D.x*bar[1] + p33D.x*bar[2];
+        var py = p13D.y*bar[0] + p23D.y*bar[1] + p33D.y*bar[2];
+        var pz = p13D.z*bar[0] + p23D.z*bar[1] + p33D.z*bar[2];
+        
+        var p3D = new Point3D(px, py, pz);
+ 
+        var a, b; 
+        a = Math.floor(x); 
+        b = Math.floor(yscan); 
+        if(zbuffer[a][b] > p3D.z){
+            zbuffer[x][yscan] = p3D.z; 
             
             var nx = triangle.a.normal.x*bar[0] + triangle.b.normal.x*bar[1] + triangle.c.normal.x*bar[2];
             var ny = triangle.a.normal.y*bar[0] + triangle.b.normal.y*bar[1] + triangle.c.normal.y*bar[2];
             var nz = triangle.a.normal.z*bar[0] + triangle.b.normal.z*bar[1] + triangle.c.normal.z*bar[2];
             
-            var n = new vector(nx, ny, nz); 
+            var n = new Vector(nx, ny, nz); 
             p3D.normal = n; 
             
             var v = new Vector (-p3D.x, -p3D.y, -p3D.z); 
-            var l = new Vector (plVista.x - p3D.x, plVista.y - p3D.y, plVista.z - p3D.z); 
+            //var lp = lighting.pl;
+            var lp = new Point3D(0,0,0);
+            var l = new Vector(lp.x - p3D.x, lp.y - p3D.y, lp.z - p3D.z); 
             
             n = n.normalize(); 
             v = v.normalize();
@@ -76,9 +104,10 @@ function scanline (yscan, xmin, xmax, triangle, index){
        
              if(v.scalarProduct(n) < 0){
                 var aux = n; 
-                n = new Vector (-n.x, -n.y, -n.z); 
+                n = new Vector (-aux.x, -aux.y, -aux.z); 
             }
-            color = ligthing.phong(n, v, l, p3D, x, yscan);  
+            var color = (22,255,35); 
+            //color = lighting.phong(n, v, l, p3D, x, yscan);  
             paint(x, yscan, color); 
         }
     }

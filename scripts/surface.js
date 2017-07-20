@@ -1,3 +1,5 @@
+var points = [];
+
 function Surface(controlPoints, evaluation){
     
     //Contrutor da superficie de bezier
@@ -59,7 +61,6 @@ function Surface(controlPoints, evaluation){
 
         for (var i=0 ; i<maxS ; i++){
             for(var j=0 ; j<maxT ; j++){
-                
                 
                 var t1 = new Triangle(this.mesh[i][j], this.mesh[i+1][j], this.mesh[i][j+1]);
                 var t2 = new Triangle(this.mesh[i+1][j+1], this.mesh[i+1][j], this.mesh[i][j+1]);

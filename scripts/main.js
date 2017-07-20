@@ -2,7 +2,8 @@ var width;
 var height;
 var canvas;
 var ctx;
-var texture;
+var points = [];
+var points2D = []; 
 
 function initCanvas(){
 	width = document.getElementById('main').offsetWidth;
@@ -14,27 +15,30 @@ function initCanvas(){
 	canvas.height = height;
 }
 
+function constObject (triangles){
+	for(var i = 0; i<triangles.length; i++){
+		processTriangle(triangles[i]); 
+	}
+}
+
 document.getElementById("draw").addEventListener('click', draw);
 function draw(){
 	if(camera != null && surface != null){
 		var points = surface.mesh;
+		var triangles = surface.meshTri;
 		ctx.fillStyle = '#FFFFFF';
 	
-		for(var i=0 ; i<points.length ; i++){
-			for(var j=0 ; j<points[0].length ; j++){
-				var p = points[i][j];
-				console.log("Point surface.mesh: " + p.x + " " + p.y + " " + p.z);
-				p = camera.changeCoord(p);
-				console.log("Point changeCoord: " + p.x + " " + p.y + " " + p.z);
-				p = camera.projectize(p);
-				console.log("Point projectize: " + p.x + " " + p.y + " " + p.z);
-				ctx.fillRect(p.x, p.y, 1, 1);
-			}
-		}
+
+		constObject(triangles);
 	}
 }
 
+function paint(x, y, color) {
+  ctx.fillStyle = "rgb(" + color.x + ", " + color.y + ", " + color.z + ")";
+  ctx.fillRect(x, y, 1, 1);
+}
+
+
 initCanvas();
 initGrid();
-
-
+initZbuffer();

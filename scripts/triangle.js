@@ -82,4 +82,5 @@ function Triangle(a, b, c){
     this.clone = function(){
         return (new Triangle(this.a, this.b, this.c));
     };
+    
 }

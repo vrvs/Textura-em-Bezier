@@ -32,7 +32,7 @@ function Camera (cam_p, n, v, hx, hy, d, width, height){
     this.projectize = function(a){
         var xp = (a.x*this.d)/(a.z*this.hx); 
         var yp = (a.y*this.d)/(a.z*this.hy);
-        var p = new Point2D(xp, yp);
+        var p = new Point2D(xp, yp, a);
         p.x = (p.x + 1)*(this.width/2); 
         p.y = (1 - p.y)*(this.height/2);
         p.normal = a.normal;

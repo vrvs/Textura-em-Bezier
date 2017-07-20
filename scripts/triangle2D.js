@@ -16,6 +16,41 @@ function Triangle2D(a, b, c){
         
         return [alfa, beta, gama]; 
     };
+    
+    this.sort = function(){
+        var t = this.clone();
+        var aux;
+        
+        if(t.a.y < t.b.y){
+            aux = t.a;
+            t.a = t.b;
+            t.b = aux;
+        } else if(t.a.y === t.b.y && t.a.x > t.b.x){
+            aux = t.a;
+            t.a = t.b;
+            t.b = aux;
+        }
+        if(t.a.y < t.c.y){
+            aux = t.a;
+            t.a = t.c;
+            t.c = aux;
+        } else if(t.a.y === t.c.y && t.a.x > t.c.x){
+            aux = t.a;
+            t.a = t.c;
+            t.c = aux;
+        }
+        if(t.b.y < t.c.y){
+            aux = t.b;
+            t.b = t.c;
+            t.c = aux;
+        } else if(t.b.y === t.c.y && t.b.x > t.c.x){
+            aux = t.b;
+            t.b = t.c;
+            t.c = aux;
+        }
+        return t;
+    };
+    
     this.clone = function(){
         return (new Triangle(this.a, this.b, this.c));
     };

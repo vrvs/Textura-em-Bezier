@@ -15,10 +15,10 @@ function processTriangle (triangle){
     var p2 = triangle.b; 
     var p3 = triangle.c; 
     
-    var minY = p1.y; 
-    var maxY = Math.max(p2.y, p3.y); 
-    var minX = p1.x; 
-    var maxX = p1.x;
+    var ymax = p1.y; 
+    var ymin = Math.min(p2.y, p3.y); 
+    var xmin = p1.x; 
+    var xmax = p1.x;
     var ang12, ang23, ang31;  
     
     if(p2.x != p1.x){
@@ -34,28 +34,44 @@ function processTriangle (triangle){
     }else {
         ang31 = 0; 
     }
-    if((p1.y - p2.y) == 0){
-        minX = Math.min(p1.x, p2.x);
-        maxX = Math.max(p1.x, p2.x); 
+    var alt = true; 
+    if((p3.y - p2.y) == 0){
+        xmin = Math.min(p3.x, p2.x);
+        xmax = Math.max(p3.x, p2.x); 
+        ang23 = ang12; 
+        alt = false; 
     }else if ((p1.y - p3.y) == 0){
-        minX = Math.min(p1.x, p3.x);
-        maxX = Math.max(p1.x, p3.x);
+        xmin = Math.min(p1.x, p3.x);
+        xmax = Math.max(p1.x, p3.x);
+        ang31 = ang23; 
+        alt = false;
     }
     
-    for (var yscan = minY; yscan < maxY; yscan++){
+    
+    for (var yscan = ymin; yscan < ymax; yscan++){
         if(yscan >= height || yscan < 0){
             continue; 
         }
-        scanline(yscan, Math.floor(minX), Math.floor(maxX), triangle);
+        
+        scanline(yscan, Math.floor(xmin), Math.floor(xmax), triangle);
+        if (alt && (yscan == p2.y || yscan == p3.y)){
+            if(yscan-p2.y){
+                ang21 = ang23;
+            }else{
+                ang31 = ang23; 
+            }
+            alt = false; 
+        }
         if(ang12 != 0){
-            minX += 1/ang12; 
+            xmin += 1/ang12; 
         }
         if(ang31 != 0){
-            maxX += 1/ang31;  
+            xmax += 1/ang31;  
         }
     }
     
 }
+var count=0; 
 
 //ajeitar a classe triangulo para retornar as coordenadas baricentricas, nao o ponto ja multiplicado. 
 function scanline (yscan, xmin, xmax, triangle){
@@ -81,7 +97,7 @@ function scanline (yscan, xmin, xmax, triangle){
         a = Math.floor(x); 
         b = Math.floor(yscan); 
         if(zbuffer[a][b] > p3D.z){
-            zbuffer[x][yscan] = p3D.z; 
+            zbuffer[a][b] = p3D.z; 
             
             var nx = triangle.a.normal.x*bar[0] + triangle.b.normal.x*bar[1] + triangle.c.normal.x*bar[2];
             var ny = triangle.a.normal.y*bar[0] + triangle.b.normal.y*bar[1] + triangle.c.normal.y*bar[2];
@@ -91,8 +107,7 @@ function scanline (yscan, xmin, xmax, triangle){
             p3D.normal = n; 
             
             var v = new Vector (-p3D.x, -p3D.y, -p3D.z); 
-            //var lp = lighting.pl;
-            var lp = new Point3D(0,0,0);
+            var lp = lighting.pl;
             var l = new Vector(lp.x - p3D.x, lp.y - p3D.y, lp.z - p3D.z); 
             
             n = n.normalize(); 
@@ -103,9 +118,11 @@ function scanline (yscan, xmin, xmax, triangle){
                 var aux = n; 
                 n = new Vector (-aux.x, -aux.y, -aux.z); 
             }
-            
-            var color = lighting.phong(n, v, l, p3D, x, yscan);  
+            console.log('aq');
+            var color = lighting.phong(n, v, l);  
+            console.log(color);
             paint(x, yscan, color); 
+            console.log(count++);
         }
     }
     

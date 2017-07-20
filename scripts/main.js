@@ -3,12 +3,9 @@ var height;
 var canvas;
 var width;
 var ctx;
-<<<<<<< HEAD
 var triangles2D = []; 
 var triangles = []; 
  
-=======
->>>>>>> e7014680a2766d7f24db170956a568e53605a0a8
 
 function initCanvas(){
 	width = document.getElementById('main').offsetWidth;
@@ -21,8 +18,7 @@ function initCanvas(){
 }
 function constObject (triangles2D){
 	for(var i = 0; i<triangles2D.length; i++){
-		console.log(triangles2D[i]);
-		processTriangle(triangles2D[i]); 
+		processTriangle(triangles2D[i]);
 	}
 }
 
@@ -41,58 +37,20 @@ function toggleType(){
 
 document.getElementById("draw").addEventListener('click', draw);
 function draw(){
-<<<<<<< HEAD
 	if(camera != null && surface != null){
 		var points = surface.mesh;
 		triangles = surface.meshTri;
 		changeDimension(triangles);
 		ctx.fillStyle = '#FFFFFF';
 		constObject(triangles2D);
-=======
-	if(type){
-		if(camera != null && object != null){
-			var points = object.points;
-			ctx.fillStyle = '#FFFFFF';
-			
-			for(var i=0 ; i<points.length ; i++){
-				var p = points[i];
-				p = camera.changeCoord(p);
-				p = camera.projectize(p);
-				ctx.fillRect(p.x, p.y, 1, 1);
-			}
-		}	
-	} else {
-		if(camera != null && surface != null && lighting != null){
-			var points = surface.mesh;
-			var pl = camera.changeCoord(lighting.pl);
-			
-			for(var i=0 ; i<points.length ; i++){
-				for(var j=0 ; j<points[0].length ; j++){
-					var p = points[i][j];
-					p = camera.changeCoord(p);
-					
-					var v = camera.cam_p.sub(p);
-					var l = pl.sub(p);
-					
-					var color = lighting.phong(p.normal, v, l);
-					
-					p = camera.projectize(p);
-					
-					ctx.fillStyle = "rgb(" + color.x + ", " + color.y + ", " + color.y + ")";
-					ctx.fillRect(p.x, p.y, 1, 1);
-				}
-			}
-		}
->>>>>>> e7014680a2766d7f24db170956a568e53605a0a8
 	}
 }
-//tranformar os pontos 3D em 2D
+
 
 function changeDimension (triangles){
 	for(var i = 0; i<triangles.length; i++){
 		
 		var aux = triangles[i];
-		
 		var a = aux.a;
 		var b = aux.b;
 		var c = aux.c; 
@@ -104,7 +62,7 @@ function changeDimension (triangles){
 		var b2D = camera.projectize(bCameraCoord);
 		var c2D = camera.projectize(cCameraCoord); 
 		var triangle = new Triangle2D(a2D, b2D, c2D); 
-		triangles2D.push(triangle); 
+		triangles2D.push(triangle.sort()); 
 		
 	}
 }

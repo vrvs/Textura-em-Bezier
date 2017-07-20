@@ -23,14 +23,6 @@ function Camera (cam_p, n, v, hx, hy, d, width, height){
     this.calcCamera();
     
     this.changeCoord = function(p){
-<<<<<<< HEAD
-        //p = p.sub(this.cam_p);
-        var r = new Point3D(p.x - this.cam_p.x, p.y - this.cam_p.y, p.z - this.cam_p.z, p.s, p.t); 
-        var x = this.ssc[0][0]*r.x + this.ssc[0][1]*r.y + this.ssc[0][2]*r.z;
-        var y = this.ssc[1][0]*r.x + this.ssc[1][1]*r.y + this.ssc[1][2]*r.z;
-        var z = this.ssc[2][0]*r.x + this.ssc[2][1]*r.y + this.ssc[2][2]*r.z;
-        return (new Point3D(x, y, z));
-=======
         p = p.translate(this.cam_p);
         var x = this.ssc[0][0]*p.x + this.ssc[0][1]*p.y + this.ssc[0][2]*p.z;
         var y = this.ssc[1][0]*p.x + this.ssc[1][1]*p.y + this.ssc[1][2]*p.z;
@@ -38,7 +30,6 @@ function Camera (cam_p, n, v, hx, hy, d, width, height){
         var a = new Point3D(x, y, z);
         a.normal = p.normal;
         return a;
->>>>>>> e7014680a2766d7f24db170956a568e53605a0a8
     };
     
     this.projectize = function(a){
@@ -46,7 +37,7 @@ function Camera (cam_p, n, v, hx, hy, d, width, height){
         var yp = (a.y*this.d)/(a.z*this.hy);
         xp = (xp + 1)*(this.width/2); 
         yp = (1 - yp)*(this.height/2);
-        var p = new Point2D(xp, yp, a);
+        var p = new Point2D(Math.floor(xp), Math.floor(yp), a);
         p.normal = a.normal; 
         return p;
     };

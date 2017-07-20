@@ -49,7 +49,6 @@ function draw(){
 		if(camera != null && lighting != null && object != null){
 			triangles = object.triangles;
 			changeDimension(triangles);
-			
 			ctx.fillStyle = '#FFFFFF';
 			constObject(triangles2D);
 		}	

@@ -139,7 +139,7 @@ function scanline (y, xmin, xmax,p1, p2, p3){
                 lighting.ka = 0.5;
             }
             var color = lighting.phong(n, v, l);
-            paint(x, yscan, color); 
+            paint(x, y, color); 
         }
         
     }

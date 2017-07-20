@@ -61,8 +61,24 @@ function Surface(controlPoints, evaluation){
                 var t1 = new Triangle(this.mesh[i][j], this.mesh[i+1][j], this.mesh[i][j+1]);
                 var t2 = new Triangle(this.mesh[i+1][j+1], this.mesh[i+1][j], this.mesh[i][j+1]);
                 if(t1.isTriangle()){
-                    this.meshTri.push(t1);
+                    this.mesh[i][j].normal = this.mesh[i][j].normal.add(t1.normal);
+                    this.mesh[i+1][j].normal = this.mesh[i+1][j].normal.add(t1.normal);
+                    this.mesh[i][j+1].normal = this.mesh[i][j+1].normal.add(t1.normal);
+                } 
+                if(t2.isTriangle()){
+                    this.mesh[i+1][j+1].normal = this.mesh[i+1][j+1].normal.add(t2.normal);
+                    this.mesh[i+1][j].normal = this.mesh[i+1][j].normal.add(t2.normal);
+                    this.mesh[i][j+1].normal = this.mesh[i][j+1].normal.add(t2.normal);
                 }
+            }
+        }
+        for (var i=0 ; i<maxS ; i++){
+            for(var j=0 ; j<maxT ; j++){
+                var t1 = new Triangle(this.mesh[i][j], this.mesh[i+1][j], this.mesh[i][j+1]);
+                var t2 = new Triangle(this.mesh[i+1][j+1], this.mesh[i+1][j], this.mesh[i][j+1]);
+                if(t1.isTriangle()){
+                    this.meshTri.push(t1);
+                } 
                 if(t2.isTriangle()){
                     this.meshTri.push(t2); 
                 }

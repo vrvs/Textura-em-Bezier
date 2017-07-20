@@ -43,56 +43,6 @@ function Lighting (pl, ka, ia, kd, od, ks, il, n){
         color.y = Math.floor(Math.min(color.y, 255));
         color.z = Math.floor(Math.min(color.z, 255));
         return color;
-        
-        
-        
-        ///////////////////////////////////////////////////
-        /*
-        var ambient = this.ia;
-        var diffuse = this.od;
-        var specular = this.il; 
-        var color = new Vector(0, 0, 0);
-        
-        n = n.normalize();
-        l = l.normalize();
-        v = v.normalize();
-        
-        ambient.x *= this.ka;
-        ambient.y *= this.ka;
-        ambient.z *= this.ka;
-        
-        var nl = n.scalarProduct(l);
-        if(nl <= 0){
-            diffuse = new Vector(0, 0, 0); 
-            specular = new Vector(0, 0, 0); 
-        } else {
-            diffuse.x = diffuse.x*this.il.x*nl*kd;
-            diffuse.y = diffuse.y*this.il.y*nl*kd;
-            diffuse.z = diffuse.z*this.il.z*nl*kd;
-            
-            var r = n;
-            r.x = 2*nl*n.x; 
-            r.y = 2*nl*n.y; 
-            r.z = 2*nl*n.z; 
-            
-            r = r.sub(l);
-            r = r.normalize();
-            var spRV = r.scalarProduct(v);
-            if(spRV > 0){
-                var aux = this.ks * Math.pow(spRV, this.n);
-                specular.x *= aux;
-                specular.y *= aux;
-                specular.z *= aux;
-            }
-        }
-        
-        color = color.add(ambient);
-        color = color.add(diffuse);
-        color = color.add(specular);
-        color.x = Math.floor(Math.min(color.x, 255));
-        color.y = Math.floor(Math.min(color.y, 255));
-        color.z = Math.floor(Math.min(color.z, 255));
-        return color;*/
     };
 }
 
@@ -125,6 +75,7 @@ function loadLighting(event){
             var n = input[count++]; 
             
             lighting = new Lighting (pl, ka, ia, kd, od, ks, il, n);
+            console.log("  = = = = = == ");
         };
     })(file);
     reader.readAsText(file);

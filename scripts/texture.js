@@ -14,22 +14,24 @@ function Texture(context, width, height){
 
 var texture = null;
 
-document.getElementById('texture').addEventListener('change', loadTexture, false);
+document.getElementById('texture').addEventListener('change', loadTexture);
 function loadTexture(event){
     var file = event.target.files[0];
     var reader = new FileReader();
     reader.onload = (function(file) {
         return function(event) {
             var data = this.result;
-            image = new Image();
+            var image = new Image();
+            image.onload = function(){
+                var canvas = document.createElement("canvas");
+	            canvas.width = this.width;
+	            canvas.height = this.height;
+	            var context = canvas.getContext("2d");
+	            ctx.drawImage(this, 0, 0);
+	            context.drawImage(this, 0, 0);
+	            texture = new Texture(context, this.width, this.height);
+            };
             image.src = data;
-            var canvas = document.createElement("canvas");
-	        canvas.width = image.width;
-	        canvas.height = image.height;
-	        var context = canvas.getContext("2d");
-	        ctx.drawImage(image, 0, 0);
-	        context.drawImage(image, 0, 0);
-	        texture = new Texture(context, image.width, image.height);
         };
     })(file);
     reader.readAsDataURL(file);

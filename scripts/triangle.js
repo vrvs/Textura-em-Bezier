@@ -25,12 +25,12 @@ function Triangle(a, b, c){
     
     //Metodo que retorna as cordenadas baricentricas dos pontos do triangulo com relação a um ponto
     this.barCoord = function(p){
-        var dX = this.a.x - this.c.x;
-        var dY = this.a.y - this.c.y;
-        
-        var beta = ((p.y - this.c.y)*dX - (p.x - this.c.x)*dY)/((this.b.y - this.c.y)*dX - (this.b.x - this.c.x)*dY);
-        var alfa = ((p.x - this.c.x) - (this.b.x - this.c.x)*beta)/dX;
-        var gama = 1 - beta - alfa;
+        var denom = (this.a.x - this.c.x) * (this.b.y - this.c.y) - (this.b.x - this.c.x) * (this.a.y - this.c.y);
+
+	    var	alfa = ((p.x - this.c.x) * (this.b.y - this.c.y) - (this.b.x - this.c.x) * (p.y - this.c.y)) / denom;
+	    var	beta = ((this.a.x - this.c.x) * (p.y - this.c.y) - (p.x - this.c.x) * (this.a.y - this.c.y)) / denom;
+	    var	gama = 1.0 - alfa - beta;
+
         
         return [alfa, beta, gama]; 
     };

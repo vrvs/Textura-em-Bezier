@@ -20,6 +20,13 @@ function constObject (triangles2D){
 	for(var i = 0; i<triangles2D.length; i++){
 		processTriangle(triangles2D[i]);
 	}
+	/* triangles2D.forEach(function(triangle){ 
+        ctx.moveTo(triangle.a.x, triangle.a.y);
+        ctx.lineTo(triangle.b.x, triangle.b.y);
+        ctx.lineTo(triangle.c.x, triangle.c.y);
+        ctx.lineTo(triangle.a.x, triangle.a.y);
+        ctx.stroke();
+    });*/ //check dos triangulos 2d
 }
 
 document.getElementById("typeObject").style.display = 'none';
@@ -62,7 +69,8 @@ function changeDimension (triangles){
 		var b2D = camera.projectize(bCameraCoord);
 		var c2D = camera.projectize(cCameraCoord); 
 		var triangle = new Triangle2D(a2D, b2D, c2D); 
-		triangles2D.push(triangle.sort()); 
+		triangle.sort();
+		triangles2D.push(triangle); 
 		
 	}
 }

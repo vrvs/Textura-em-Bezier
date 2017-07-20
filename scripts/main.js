@@ -3,12 +3,9 @@ var height;
 var canvas;
 var width;
 var ctx;
-<<<<<<< HEAD
 var triangles2D = []; 
 var triangles = []; 
- 
-=======
->>>>>>> e7014680a2766d7f24db170956a568e53605a0a8
+
 
 function initCanvas(){
 	width = document.getElementById('main').offsetWidth;
@@ -41,14 +38,6 @@ function toggleType(){
 
 document.getElementById("draw").addEventListener('click', draw);
 function draw(){
-<<<<<<< HEAD
-	if(camera != null && surface != null){
-		var points = surface.mesh;
-		triangles = surface.meshTri;
-		changeDimension(triangles);
-		ctx.fillStyle = '#FFFFFF';
-		constObject(triangles2D);
-=======
 	if(type){
 		if(camera != null && object != null){
 			var points = object.points;
@@ -83,7 +72,6 @@ function draw(){
 				}
 			}
 		}
->>>>>>> e7014680a2766d7f24db170956a568e53605a0a8
 	}
 }
 //tranformar os pontos 3D em 2D

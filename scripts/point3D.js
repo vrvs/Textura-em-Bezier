@@ -14,7 +14,7 @@
     
     //Metodo que realiza a soma de dois pontos
     this.add = function(a){
-        return (new Point3D(this.x + a.x, this.y + a.y, this.z + a.z, )); 
+        return (new Point3D(this.x + a.x, this.y + a.y, this.z + a.z)); 
     };
     
     //Metodo que translada um ponto com relação a outro

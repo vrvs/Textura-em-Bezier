@@ -4,7 +4,6 @@ function Texture(context, width, height){
     this.width = width;
     
     this.getRGB = function(s, t){
-        console.log(s*this.width + " / "+ t*this.height);
         var canvasColor = this.img.getImageData(s*this.width, t*this.height, 1, 1).data;
         var r = canvasColor[0];
         var g = canvasColor[1];

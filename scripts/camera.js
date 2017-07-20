@@ -1,3 +1,4 @@
+
 function Camera (cam_p, n, v, hx, hy, d, width, height){
     
     this.cam_p = cam_p;     //Ponto da camera
@@ -26,7 +27,7 @@ function Camera (cam_p, n, v, hx, hy, d, width, height){
         var x = this.ssc[0][0]*p.x + this.ssc[0][1]*p.y + this.ssc[0][2]*p.z;
         var y = this.ssc[1][0]*p.x + this.ssc[1][1]*p.y + this.ssc[1][2]*p.z;
         var z = this.ssc[2][0]*p.x + this.ssc[2][1]*p.y + this.ssc[2][2]*p.z;
-        var a = new Point3D(x, y, z);
+        var a = new Point3D(x, y, z, p.s, p.t);
         a.normal = p.normal;
         return a;
     };
@@ -34,10 +35,10 @@ function Camera (cam_p, n, v, hx, hy, d, width, height){
     this.projectize = function(a){
         var xp = (a.x*this.d)/(a.z*this.hx); 
         var yp = (a.y*this.d)/(a.z*this.hy);
-        var p = new Point2D(xp, yp);
-        p.x = (p.x + 1)*(this.width/2); 
-        p.y = (1 - p.y)*(this.height/2);
-        p.normal = a.normal;
+        xp = (xp + 1)*(this.width/2); 
+        yp = (1 - yp)*(this.height/2);
+        var p = new Point2D(Math.floor(xp), Math.floor(yp), a);
+        p.normal = a.normal; 
         return p;
     };
 }

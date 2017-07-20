@@ -1,3 +1,5 @@
+var points = [];
+
 function Surface(controlPoints, evaluation){
     
     //Contrutor da superficie de bezier
@@ -43,7 +45,11 @@ function Surface(controlPoints, evaluation){
                     var bernS = this.bernstein(n, i, s);
                     for (var j=0; j<=m; j++){
                         var bernT = this.bernstein(m, j, t);
-                        point = point.add(controlPoints[i][j].scalarMulti(bernS * bernT));
+                        var a = controlPoints[i][j].scalarMulti(bernS * bernT); 
+                        point.x += a.x; 
+                        point.y += controlPoints[i][j].scalarMulti(bernS * bernT).y;
+                        point.z += controlPoints[i][j].scalarMulti(bernS * bernT).z; 
+                        //point = point.add(controlPoints[i][j].scalarMulti(bernS * bernT));
                     }
                 }
                 point.s = s;

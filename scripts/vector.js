@@ -1,90 +1,78 @@
-
 function Vector(x, y, z){
-	this.x = x;
-	this.y = y;
-	this.z = z; 
 	
-	this.scalar_product = function(a){
-		var result = this.x*a.x + this.y*a.y + this.z*a.z; 
-		return result; 
-	}
-	this.vector_product = function(b){
-		var result = new Vector;
-		result.x = this.y*b.z - this.z*b.y;
-		result.y = this.x*b.z - this.z*b.x;
-		result.z = this.x*b.y - this.y*b.x; 
-		return result; 
-	}
-
-	this.normalization = function(){
-		var norma = this.norma(); 
-		this.x = this.x/norma;
-		this.y = this.y/norma;
-		this.z = this.z/norma; 
-	}
-
-	this.gram_schmidt = function(v){
-		var u2 = new Vector;
-		var aux = this.projection(v);
-		u2 = this.sub(v, aux); 
-
-		return u2; 
-	}
-
-	this.projection = function(b){
-
-		var result = new Vector; 
-		var scalar; 
-
-		scalar = this.scalar_product(b)/b.scalar_product(b); 
-		result.x = scalar*b.x;
-		result.y = scalar*b.y;
-		result.z = scalar*b.z;
-
-		return result;  
-	}
-
-	this.add = function(a,b){
-		var result = new Vector; 
-
-		result.x = a.x + b.x; 
-		result.y = a.y + b.y; 
-		result.z = a.z + b.z; 
-
-		return result; 
-	}
-
-	this.sub = function(a,b){
-		var result = new Vector; 
-
-		result.x = a.x - b.x; 
-		result.y = a.y - b.y; 
-		result.z = a.z - b.z; 
-
-		return result; 
-	}
+	//Construtor da classe vetor
+	this.x = x;		//Coordenada X do vetor
+	this.y = y;		//Coordenada Y do vetor
+	this.z = z;		//Coordenada Z do vetor
 	
-	this.cosine = function(b){
-		var result = 0; 
-		var scalar = this.scalar_product(b); 
-		var norma1 = this.normalization(); 
-		var norma2 = b.normalization(); 
+	//Metodo que realiza o produto escalar de vetores
+	this.scalarProduct = function(v){
+		var result = this.x*v.x + this.y*v.y + this.z*v.z;
+		return result;
+	};
+	
+	//Metodo que realiza o produto vetorial de vetores
+	this.vectorProduct = function(v){
+		var nX = this.y*v.z - this.z*v.y;
+		var nY = this.x*v.z - this.z*v.x;
+		var nZ = this.x*v.y - this.y*v.x; 
+		return (new Vector(nX, -nY, nZ)); 
+	};
 		
-		result = scalar/(norma1*norma2); 
-		
-		return result; 
-	}
+	//Metodo que realiza a normalização do vetor
+	this.normalize = function(){
+		var norma = this.norma();
+		var nX = this.x/norma;
+		var nY = this.y/norma;
+		var nZ = this.z/norma;
+		return (new Vector(nX, nY, nZ));
+	};
+
+	//Metodo que realiza a operação de ortogonalização de Gram-Schimdt
+	this.gramSchmidt = function(v){
+		var u = v.projectize(this);
+		var w = v.sub(u);
+		return w;
+	};
+
+	//Metodo que realiza a projeção de um vetor
+	this.projectize = function(v){
+		var scalar = this.scalarProduct(v)/v.scalarProduct(v); 
+		var nX = scalar*v.x;
+		var nY = scalar*v.y;
+		var nZ = scalar*v.z;
+		return (new Vector(nX, nY, nZ));  
+	};
+
+	//Medoto que realiza a soma de dois vetores
+	this.add = function(v){
+		var nX = this.x + v.x;
+		var nY = this.y + v.y;
+		var nZ = this.z + v.z;
+		return (new Vector(nX, nY, nZ)); 
+	};
+
+	//Medoto que realiza a subtração0 de dois vetores
+	this.sub = function(v){
+		var nX = this.x - v.x;
+		var nY = this.y - v.y; 
+		var nZ = this.z - v.z;
+		return (new Vector(nX, nY, nZ));
+	};
 	
-	this.kroneck_product = function(b){
-		var result = new Vector(this.x*b.x, this.y*b.y, this.z*b.z); 
+	//Metodo que realiza o calculo de coseno entre dois vetores 
+	this.cosine = function(v){ 
+		var scalar = this.scalarProduct(v);
+		var norma1 = this.norma();
+		var norma2 = v.norma();
+		var result = scalar/(norma1*norma2);
 		return result; 
-	}
+	};
 	
+	//Metodo que retira a norma de um vetor
 	this.norma = function(){
-		var result = this.scalar_product(this);
-		var norma = Math.sqrt(result);
+		var sProd = this.scalarProduct(this);
+		var norma = Math.sqrt(sProd);
 		return norma; 
-	}
-	
+	};
 }
-

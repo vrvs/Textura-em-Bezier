@@ -39,6 +39,12 @@ nav {
   font-size: 0.9em;
 }
 
+.text {
+  color: #414141;
+  font-family: sans-serif;
+  font-size: 0.8em;
+}
+
 p {
   color: #414141;
   text-align: center;
@@ -52,7 +58,7 @@ button {
   text-align: center;
 }
 
-input {
+.fileChoose {
   width: 228px;
   color: #414141;
   font-size: 0.8em;

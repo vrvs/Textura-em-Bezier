@@ -11,23 +11,33 @@
             
             <hr align="left" size="1" color=darkgray>
             
+            <input id="cbObject" type="checkbox"/>
+            <label class="text">Usar objetos como entrada</label>
+            
+            <br><br>
             <label class="subtitle">Camera:</label><br>
-            <input type="file" id="camera" value="" title=".cfg">
+            <input type="file" id="camera" class="fileChoose" value="" title=".cfg">
             
             <br><br>
             <label class="subtitle">Iluminação:</label><br>
-            <input type="file" id="lighting" value="" title=".txt">
+            <input type="file" id="lighting" class="fileChoose" value="" title=".txt">
             
             <br><br>
-            <label class="subtitle">Superfície:</label><br>
-            <input type="file" id="surface" value="" title=".byu">
+            <div id="typeSurface">
+                <label class="subtitle">Superfície:</label><br>
+                <input type="file" id="surface" class="fileChoose" value="" title=".byu">
+                
+                <br><br>
+                <label class="subtitle">Textura:</label><br>
+                <input type="file" id="texture" class="fileChoose" value="" title=".jpg">
+            </div>
+            <div id="typeObject">
+                <label class="subtitle">Objeto:</label><br>
+                <input type="file" id="object" class="fileChoose" value="" title=".byu">
+            </div>
             
             <br><br>
-            <label class="subtitle">Textura:</label><br>
-            <input type="file" id="texture" value="" title=".jpg">
-            
-            <br><br>
-            <button onclick="draw()">Desenhar</button>
+            <button id="draw">Desenhar</button>
             
             <hr align="left" size="1" color=darkgray>
 
@@ -42,7 +52,18 @@
         <div id="main">
             <canvas id="canvas"></canvas>
         </div>
-        
-    </body>     
-    <script src="scripts/Main.js" charset="utf-8"></script>
+    </body>
+    <script src="scripts/vector.js"></script>
+    <script src="scripts/point2D.js"></script>
+    <script src="scripts/point3D.js"></script>
+    <script src="scripts/triangle.js"></script>
+    <script src="scripts/object.js"></script>
+    <script src="scripts/surface.js"></script>
+    <script src="scripts/lighting.js"></script>
+    <script src="scripts/camera.js"></script>
+    <script src="scripts/texture.js"></script>
+    <script src="scripts/grid.js"></script>
+    <script src="scripts/zbuffer.js"></script>
+    <script src="scripts/triangle2D.js"></script>        
+    <script src="scripts/main.js"></script>        
 </html>

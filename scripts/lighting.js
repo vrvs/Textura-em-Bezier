@@ -8,7 +8,8 @@ function Lighting (pl, ka, ia, kd, od, ks, il, n){
     this.od = od;   //vetor difuso
     this.ks = ks;   //constante especular 
     this.il = il;   //cor da fonte de luz
-    this.n = n;     //constante de rugosidade 
+    this.n = n;     //constante de rugosidade
+    this.backupIA = ia;
     
     this.phong = function(n, v, l){
         var color = new Vector(0, 0, 0);

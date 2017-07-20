@@ -12,8 +12,8 @@ function Camera (cam_p, n, v, hx, hy, d, width, height){
     this.ssc = [];          //Matriz de mudanca de base de coordenada universal para a coordenada da camera
     
     this.calcCamera = function(){
-        this.n = this.n.normalize();                //Normaliza o vetor N
-        this.v = this.n.gramSchmidt(this.v);           //Ortagonaliza V com relação a N com Gram-Schimidt 
+        this.n = this.n.normalize();                    //Normaliza o vetor N
+        this.v = this.n.gramSchmidt(this.v);            //Ortagonaliza V com relação a N com Gram-Schimidt 
         this.v = this.v.normalize();                
         var u = this.n.vectorProduct(this.v);
         this.ssc.push([u.x, u.y, u.z]);
@@ -27,7 +27,7 @@ function Camera (cam_p, n, v, hx, hy, d, width, height){
         var x = this.ssc[0][0]*p.x + this.ssc[0][1]*p.y + this.ssc[0][2]*p.z;
         var y = this.ssc[1][0]*p.x + this.ssc[1][1]*p.y + this.ssc[1][2]*p.z;
         var z = this.ssc[2][0]*p.x + this.ssc[2][1]*p.y + this.ssc[2][2]*p.z;
-        var a = new Point3D(x, y, z);
+        var a = new Point3D(x, y, z, p.s, p.t);
         a.normal = p.normal;
         return a;
     };

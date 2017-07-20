@@ -45,6 +45,10 @@ function toggleType(){
 
 document.getElementById("draw").addEventListener('click', draw);
 function draw(){
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	initGrid();
+	initZbuffer();
+	
 	if(type){
 		if(camera != null && lighting != null && object != null){
 			triangles = object.triangles;
@@ -65,6 +69,7 @@ function draw(){
 
 
 function changeDimension (triangles){
+	triangles2D = [];
 	for(var i = 0; i<triangles.length; i++){
 		
 		var aux = triangles[i];

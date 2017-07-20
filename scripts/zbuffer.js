@@ -1,6 +1,7 @@
-var zbuffer = [];
+var zbuffer;
 
 function initZbuffer(){
+  zbuffer = [];
 	for(var i = 0; i<width; i++){
 		zbuffer.push([]); 
 		for(var j = 0; j<height; j++){
@@ -134,12 +135,13 @@ function scanline (y, xmin, xmax,p1, p2, p3){
             
             if(!type){
                 var barS = p13D.s*bar[0] + p23D.s*bar[1] + p33D.s*bar[2];
-                var barT = p13D.t*bar[0] + p23D.t*bar[1] + p33D.t*bar[2];  
+                var barT = p13D.t*bar[0] + p23D.t*bar[1] + p33D.t*bar[2];
                 lighting.ia = texture.getRGB(barS, barT);
-                lighting.ka = 0.5;
+            } else {
+                lighting.ia = lighting.backupIA;
             }
             var color = lighting.phong(n, v, l);
-            paint(x, yscan, color); 
+            paint(x, y, color); 
         }
         
     }

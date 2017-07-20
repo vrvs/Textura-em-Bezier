@@ -16,6 +16,7 @@ function initCanvas(){
 	canvas.width = width;
 	canvas.height = height;
 }
+
 function constObject (triangles2D){
 	for(var i = 0; i<triangles2D.length; i++){
 		processTriangle(triangles2D[i]);
@@ -44,12 +45,21 @@ function toggleType(){
 
 document.getElementById("draw").addEventListener('click', draw);
 function draw(){
-	if(camera != null && surface != null){
-		var points = surface.mesh;
-		triangles = surface.meshTri;
-		changeDimension(triangles);
-		ctx.fillStyle = '#FFFFFF';
-		constObject(triangles2D);
+	if(type){
+		if(camera != null && lighting != null && object != null){
+			triangles = object.triangles;
+			changeDimension(triangles);
+			
+			ctx.fillStyle = '#FFFFFF';
+			constObject(triangles2D);
+		}	
+	} else {
+		if(camera != null && lighting != null && surface != null && texture != null){
+			triangles = surface.meshTri;
+			changeDimension(triangles);
+			ctx.fillStyle = '#FFFFFF';
+			constObject(triangles2D);
+		}
 	}
 }
 

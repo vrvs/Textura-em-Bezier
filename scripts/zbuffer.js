@@ -131,9 +131,15 @@ function scanline (y, xmin, xmax,p1, p2, p3){
                 var aux = n; 
                 n = new Vector (-aux.x, -aux.y, -aux.z); 
             }
-         
-            var color = lighting.phong(n, v, l);  
-            paint(x, y, color); 
+            
+            if(!type){
+                var barS = p13D.s*bar[0] + p23D.s*bar[1] + p33D.s*bar[2];
+                var barT = p13D.t*bar[0] + p23D.t*bar[1] + p33D.t*bar[2];  
+                lighting.ia = texture.getRGB(barS, barT);
+                lighting.ka = 0.5;
+            }
+            var color = lighting.phong(n, v, l);
+            paint(x, yscan, color); 
         }
         
     }

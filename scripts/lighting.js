@@ -10,47 +10,88 @@ function Lighting (pl, ka, ia, kd, od, ks, il, n){
     this.il = il;   //cor da fonte de luz
     this.n = n;     //constante de rugosidade 
     
-    this.phong = function(n, v, l, p, x, y){
+    this.phong = function(n, v, l){
+        var color = new Vector(0, 0, 0);
+        var diffuse = new Vector(0, 0, 0);
+        var specular = new Vector(0, 0, 0);
+        var ambient = new Vector(this.ia.x*this.ka, this.ia.y*this.ka, this.ia.z*this.ka);
+        
+        var nl = n.scalarProduct(l);
+        if(nl > 0) {
+            diffuse = new Vector(this.kd*this.od.x*this.il.x*nl, this.kd*this.od.y*this.il.y*nl, this.kd*this.od.z*this.il.z*nl);
+        
+            var r = n;
+            r.x = 2*nl*n.x;
+            r.y = 2*nl*n.y;
+            r.z = 2*nl*n.z;
+            r = r.sub(l);
+        
+            var spRV = r.scalarProduct(v);
+            if(spRV > 0){
+                var aux = this.ks*Math.pow(spRV, this.n);
+                specular.x = this.il.x*aux;
+                specular.y = this.il.y*aux;
+                specular.z = this.il.z*aux;
+            }
+        }
+        
+        color = color.add(ambient);
+        color = color.add(diffuse);
+        color = color.add(specular);
+        color.x = Math.floor(Math.min(color.x, 255));
+        color.y = Math.floor(Math.min(color.y, 255));
+        color.z = Math.floor(Math.min(color.z, 255));
+        return color;
+        
+        
+        
+        ///////////////////////////////////////////////////
+        /*
         var ambient = this.ia;
         var diffuse = this.od;
         var specular = this.il; 
-        var color = new Vector(0,0,0);
-        var r,aux; 
+        var color = new Vector(0, 0, 0);
+        
         n = n.normalize();
         l = l.normalize();
         v = v.normalize();
+        
         ambient.x *= this.ka;
         ambient.y *= this.ka;
         ambient.z *= this.ka;
+        
         var nl = n.scalarProduct(l);
-        diffuse.x = diffuse.x*this.il.x*nl*kd;
-        diffuse.y = diffuse.y*this.il.y*nl*kd;
-        diffuse.z = diffuse.z*this.il.z*nl*kd;
-        if(nl < 0){
-            diffuse = new Vector(0,0,0); 
-            specular = new vector(0,0,0); 
-        }else{
-            r = n;
+        if(nl <= 0){
+            diffuse = new Vector(0, 0, 0); 
+            specular = new Vector(0, 0, 0); 
+        } else {
+            diffuse.x = diffuse.x*this.il.x*nl*kd;
+            diffuse.y = diffuse.y*this.il.y*nl*kd;
+            diffuse.z = diffuse.z*this.il.z*nl*kd;
+            
+            var r = n;
             r.x = 2*nl*n.x; 
             r.y = 2*nl*n.y; 
             r.z = 2*nl*n.z; 
+            
             r = r.sub(l);
-            r = r.normalize(); 
-            if(r.scalarProduct(v) < 0){
-                diffuse = new Vector(0,0,0);
-                aux = this.ks * Math.pow(r.scalarProduct(v),this.n);
+            r = r.normalize();
+            var spRV = r.scalarProduct(v);
+            if(spRV > 0){
+                var aux = this.ks * Math.pow(spRV, this.n);
                 specular.x *= aux;
                 specular.y *= aux;
-                specular.z *= aux
+                specular.z *= aux;
             }
         }
-        color.add(ambient);
-        color.add(diffuse);
-        color.add(specular);
-        color.x = Math.floor(Math.min(color.x,255));
-        color.y = Math.floor(Math.min(color.y,255));
-        color.z = Math.floor(Math.min(color.z,255));
-        return color;
+        
+        color = color.add(ambient);
+        color = color.add(diffuse);
+        color = color.add(specular);
+        color.x = Math.floor(Math.min(color.x, 255));
+        color.y = Math.floor(Math.min(color.y, 255));
+        color.z = Math.floor(Math.min(color.z, 255));
+        return color;*/
     };
 }
 

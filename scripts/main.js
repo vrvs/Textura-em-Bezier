@@ -42,15 +42,23 @@ function draw(){
 			}
 		}	
 	} else {
-		if(camera != null && surface != null){
+		if(camera != null && surface != null && lighting != null){
 			var points = surface.mesh;
-			ctx.fillStyle = '#FFFFFF';
+			var pl = camera.changeCoord(lighting.pl);
 			
 			for(var i=0 ; i<points.length ; i++){
 				for(var j=0 ; j<points[0].length ; j++){
 					var p = points[i][j];
 					p = camera.changeCoord(p);
+					
+					var v = camera.cam_p.sub(p);
+					var l = pl.sub(p);
+					
+					var color = lighting.phong(p.normal, v, l);
+					
 					p = camera.projectize(p);
+					
+					ctx.fillStyle = "rgb(" + color.x + ", " + color.y + ", " + color.y + ")";
 					ctx.fillRect(p.x, p.y, 1, 1);
 				}
 			}

@@ -22,11 +22,13 @@ function Camera (cam_p, n, v, hx, hy, d, width, height){
     this.calcCamera();
     
     this.changeCoord = function(p){
-        p = p.sub(this.cam_p);
+        p = p.translate(this.cam_p);
         var x = this.ssc[0][0]*p.x + this.ssc[0][1]*p.y + this.ssc[0][2]*p.z;
         var y = this.ssc[1][0]*p.x + this.ssc[1][1]*p.y + this.ssc[1][2]*p.z;
         var z = this.ssc[2][0]*p.x + this.ssc[2][1]*p.y + this.ssc[2][2]*p.z;
-        return (new Point3D(x, y, z));
+        var a = new Point3D(x, y, z);
+        a.normal = p.normal;
+        return a;
     };
     
     this.projectize = function(a){

@@ -69,12 +69,6 @@ function loadCamera(event){
             var width = document.getElementById('main').offsetWidth;
             
             camera = new Camera(cam_p, n, v, hx, hy, d, width, height);
-            
-            console.log(camera.cam_p.x + " " + camera.cam_p.y + " " + camera.cam_p.z);
-            console.log(camera.n.x + " " + camera.n.y + " " + camera.n.z);
-            console.log(camera.v.x + " " + camera.v.y + " " + camera.v.z);
-            console.log(camera.d + " " + camera.hx + " " + camera.hy);
-            console.log(camera.width + " " + camera.height);
         };
     })(file);
     reader.readAsText(file);

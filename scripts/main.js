@@ -1,8 +1,8 @@
-var width;
+var type = false;
 var height;
 var canvas;
+var width;
 var ctx;
-var texture;
 
 function initCanvas(){
 	width = document.getElementById('main').offsetWidth;
@@ -14,21 +14,45 @@ function initCanvas(){
 	canvas.height = height;
 }
 
+document.getElementById("typeObject").style.display = 'none';
+document.getElementById("cbObject").addEventListener('change', toggleType);
+function toggleType(){
+	type = !type;
+	if(type){
+		document.getElementById("typeSurface").style.display = 'none';
+		document.getElementById("typeObject").style.display = 'block';
+	} else {
+		document.getElementById("typeSurface").style.display = 'block';
+		document.getElementById("typeObject").style.display = 'none';
+	}
+}
+
 document.getElementById("draw").addEventListener('click', draw);
 function draw(){
-	if(camera != null && surface != null){
-		var points = surface.mesh;
-		ctx.fillStyle = '#FFFFFF';
-	
-		for(var i=0 ; i<points.length ; i++){
-			for(var j=0 ; j<points[0].length ; j++){
-				var p = points[i][j];
-				console.log("Point surface.mesh: " + p.x + " " + p.y + " " + p.z);
+	if(type){
+		if(camera != null && object != null){
+			var points = object.points;
+			ctx.fillStyle = '#FFFFFF';
+			
+			for(var i=0 ; i<points.length ; i++){
+				var p = points[i];
 				p = camera.changeCoord(p);
-				console.log("Point changeCoord: " + p.x + " " + p.y + " " + p.z);
 				p = camera.projectize(p);
-				console.log("Point projectize: " + p.x + " " + p.y + " " + p.z);
 				ctx.fillRect(p.x, p.y, 1, 1);
+			}
+		}	
+	} else {
+		if(camera != null && surface != null){
+			var points = surface.mesh;
+			ctx.fillStyle = '#FFFFFF';
+			
+			for(var i=0 ; i<points.length ; i++){
+				for(var j=0 ; j<points[0].length ; j++){
+					var p = points[i][j];
+					p = camera.changeCoord(p);
+					p = camera.projectize(p);
+					ctx.fillRect(p.x, p.y, 1, 1);
+				}
 			}
 		}
 	}

@@ -1,4 +1,4 @@
-function Point2D (x,y) {
+function Point2D (x, y) {
     
     //Construtor da classe Point2D
     this.x = x;     //Coordenada x do ponto

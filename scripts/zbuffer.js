@@ -67,12 +67,9 @@ function scanline (yscan, xmin, xmax, triangle){
         
         var p = new Point2D(x, yscan, new Point3D(0,0,0)); 
         bar = triangle.barCoord(p); 
-        //var p13D = triangle.a.treeD; 
-        //var p23D = triangle.b.treeD;
-        //var p33D = triangle.c.treeD; 
-        var p13D = triangle.a;
-        var p23D = triangle.b;
-        var p33D = triangle.c; 
+        var p13D = triangle.a.threeD; 
+        var p23D = triangle.b.threeD;
+        var p33D = triangle.c.threeD; 
         
         var px = p13D.x*bar[0] + p23D.x*bar[1] + p33D.x*bar[2];
         var py = p13D.y*bar[0] + p23D.y*bar[1] + p33D.y*bar[2];
@@ -106,8 +103,8 @@ function scanline (yscan, xmin, xmax, triangle){
                 var aux = n; 
                 n = new Vector (-aux.x, -aux.y, -aux.z); 
             }
-            var color = (22,255,35); 
-            //color = lighting.phong(n, v, l, p3D, x, yscan);  
+            
+            var color = lighting.phong(n, v, l, p3D, x, yscan);  
             paint(x, yscan, color); 
         }
     }

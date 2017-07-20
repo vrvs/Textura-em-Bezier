@@ -9,14 +9,14 @@
     this.normal= new Vector(0,0,0);     //vetor normal ao ponto
 
     this.scalarMulti = function(k){
-        return (new Point3D(this.x*k, this.y*k, this.z*k)); 
+        return (new Point3D(this.x*k, this.y*k, this.z*k,this.s, this.t));
     };
     
     this.add = function(a){
-        return (new Point3D(this.x + a.x, this.y + a.y, this.z + a.z)); 
+        return (new Point3D(this.x + a.x, this.y + a.y, this.z + a.z, )); 
     };
     
     this.sub = function(a){
-        return (new Point3D(this.x - a.x, this.y - a.y, this.z - a.z)); 
+        return (new Point3D(this.x - a.x, this.y - a.y, this.z - a.z, this.s - a.s, this.t - a.t)); 
     };
 }

@@ -1,4 +1,4 @@
- function Point3D(x, y, z, s = 0, t = 0){
+ function Point3D(x, y, z, s, t){
     
     //Construtor da classe de Pontos 3D
     this.x = x;                         //valor de X do ponto corrente
@@ -19,7 +19,7 @@
     
     //Metodo que translada um ponto com relação a outro
     this.translate = function(a){
-        var p = new Point3D(this.x - a.x, this.y - a.y, this.z - a.z);
+        var p = new Point3D(this.x - a.x, this.y - a.y, this.z - a.z, this.s, this.t);
         p.normal = this.normal;
         return p; 
     };

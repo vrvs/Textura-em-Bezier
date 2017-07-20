@@ -8,7 +8,7 @@ function Triangle2D(a, b, c){
     
     this.barCoord = function(p){
         
-      var denom = (this.a.x - this.c.x) * (this.b.y - this.c.y) - (this.b.x - this.c.x) * (this.a.y - this.c.y);
+        var denom = (this.a.x - this.c.x) * (this.b.y - this.c.y) - (this.b.x - this.c.x) * (this.a.y - this.c.y);
 
 	    var	alfa = ((p.x - this.c.x) * (this.b.y - this.c.y) - (this.b.x - this.c.x) * (p.y - this.c.y)) / denom;
 	    var	beta = ((this.a.x - this.c.x) * (p.y - this.c.y) - (p.x - this.c.x) * (this.a.y - this.c.y)) / denom;
@@ -41,3 +41,4 @@ function Triangle2D(a, b, c){
         return (new Triangle(this.a, this.b, this.c));
     };
 }
+

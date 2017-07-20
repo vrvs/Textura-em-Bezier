@@ -1,4 +1,4 @@
- function Point3D(x, y, z, s, t){
+function Point3D(x, y, z, s, t){
     
     //Construtor da classe de Pontos 3D
     this.x = x;                         //valor de X do ponto corrente

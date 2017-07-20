@@ -1,4 +1,3 @@
-
 function Camera (cam_p, n, v, hx, hy, d, width, height){
     
     this.cam_p = cam_p;     //Ponto da camera

@@ -21,16 +21,8 @@ function constObject (triangles2D){
 	for(var i = 0; i<triangles2D.length; i++){
 		processTriangle(triangles2D[i]);
 	}
-	/* triangles2D.forEach(function(triangle){ 
-        ctx.moveTo(triangle.a.x, triangle.a.y);
-        ctx.lineTo(triangle.b.x, triangle.b.y);
-        ctx.lineTo(triangle.c.x, triangle.c.y);
-        ctx.lineTo(triangle.a.x, triangle.a.y);
-        ctx.stroke();
-    });*/ //check dos triangulos 2d
 }
 
-document.getElementById("typeObject").style.display = 'none';
 document.getElementById("cbObject").addEventListener('change', toggleType);
 function toggleType(){
 	type = !type;
@@ -43,8 +35,21 @@ function toggleType(){
 	}
 }
 
+document.getElementById("surface").addEventListener('click', reset, false);
+document.getElementById("camera").addEventListener('click', reset, false);
+document.getElementById("texture").addEventListener('click', reset, false);
+document.getElementById("object").addEventListener('click', reset, false);
+document.getElementById("lighting").addEventListener('click', reset, false);
+function reset(event){
+	this.value = "";
+}
+
 document.getElementById("draw").addEventListener('click', draw);
 function draw(){
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	initGrid();
+	initZbuffer();
+	
 	if(type){
 		if(camera != null && lighting != null && object != null){
 			triangles = object.triangles;
@@ -65,6 +70,7 @@ function draw(){
 
 
 function changeDimension (triangles){
+	triangles2D = [];
 	for(var i = 0; i<triangles.length; i++){
 		
 		var aux = triangles[i];
@@ -86,8 +92,8 @@ function changeDimension (triangles){
 }
 
 function paint(x, y, color) {
-  ctx.fillStyle = "rgb(" + color.x + ", " + color.y + ", " + color.z + ")";
-  ctx.fillRect(x, y, 1, 1);
+	ctx.fillStyle = "rgb(" + color.x + ", " + color.y + ", " + color.z + ")";
+	ctx.fillRect(x, y, 1, 1);
 }
 
 
